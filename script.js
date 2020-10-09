@@ -97,8 +97,8 @@ function addMealToFavoriteContainer(i_MealToAdd){
     
     mealToWeb.innerHTML =
     `<header>
-    <button href=${i_MealToAdd.strSource} title="Recipe" id="recipe-btn" class="recipe-item"><i class="fas fa-book-reader"></i></button>
-    <button title="Delete" id="delete-btn" class="delete-item"><i class="fas fa-times"></i></button>
+    <button href=${i_MealToAdd.strSource} title="Recipe" id="recipe-btn" class="fav-btn-item"><i class="fas fa-book-reader"></i></button>
+    <button title="Delete" id="delete-btn" class="fav-btn-item""><i class="fas fa-times"></i></button>
     </header>
     <img src="${i_MealToAdd.strMealThumb}" alt=""><span>${i_MealToAdd.strMeal}</span>`;
     favoriteContainer.prepend(mealToWeb);

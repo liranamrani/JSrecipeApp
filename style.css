@@ -48,6 +48,7 @@ button{
 
 .favorite-container h3{
     margin-bottom: 0;
+    margin-top: 0.4rem;
 }
 
 
@@ -72,6 +73,9 @@ button{
     justify-content: space-between;
     padding: 0.5rem;
 }
+.meal-body-buttons{
+    display: flex;
+}
 
 .meal-body button{
     margin-left: auto;
@@ -84,8 +88,8 @@ button{
 .meal-body .fav-btn.active{
     color: red;
 }
-.meal-body .fav-btn.fav-btn.active{
-    color: red;
+button:hover{
+    font-size: 20px;
 }
 .fa-sync-alt:hover{
     color: rgb(143, 194, 189);
@@ -107,6 +111,7 @@ button{
     list-style-type: none;
     padding: 0;
     margin-top: 0;
+    margin-bottom: 0.5;
 }
 
 .favorite-meals.long{
@@ -119,7 +124,7 @@ button{
 
 .favorite-meals li{
     max-width: 100px;
-    max-height: 150px;
+    max-height: 170px;
     margin: 3px;
 
 }
@@ -127,11 +132,18 @@ button{
     display: block;
     font-size: 0.8rem;
 }
-
-.favorite-meals header{
+.favorite-meals li header{
     margin: 0;
     padding: 0;
 }
+
+.favorite-meals li header .fav-btn-item{
+    opacity: 0;
+}
+.favorite-meals li:hover .fav-btn-item{
+    opacity: 1;
+}
+
 
 .favorite-meals img{
 max-width: 100px;
@@ -144,6 +156,16 @@ border-radius: 20%;
 
 .favorite-meals #recipe-btn{
     margin-right: 15px; 
+}
+
+.favorite-meals button:hover{
+    color: rgb(143, 194, 189);
+}
+#random-recipe-btn:hover{
+    color: rgb(143, 194, 189);
+}
+#clear-btn:hover{
+    color:red;
 }
 
 header{
