@@ -14,6 +14,9 @@ background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-2
 background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+button{
+    outline: none;
+}
 
 .mobile-container
 {
@@ -41,6 +44,10 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, F
     outline: none;
     border:none;
     cursor: pointer;
+}
+
+.favorite-container h3{
+    margin-bottom: 0;
 }
 
 
@@ -80,6 +87,9 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, F
 .meal-body .fav-btn.fav-btn.active{
     color: red;
 }
+.fa-sync-alt:hover{
+    color: rgb(143, 194, 189);
+}
 
 .meal-body h4{
     margin: 0;
@@ -96,6 +106,7 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, F
     overflow: auto;
     list-style-type: none;
     padding: 0;
+    margin-top: 0;
 }
 
 .favorite-meals.long{
@@ -108,13 +119,18 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, F
 
 .favorite-meals li{
     max-width: 100px;
-    max-height: 120px;
+    max-height: 150px;
     margin: 3px;
 
 }
 .favorite-meals li span{
     display: block;
     font-size: 0.8rem;
+}
+
+.favorite-meals header{
+    margin: 0;
+    padding: 0;
 }
 
 .favorite-meals img{
@@ -124,6 +140,10 @@ object-fit: cover;
 border: 2px solid rgb(196, 184, 162);
 box-shadow: 0 0 10px 2px #3333331a;
 border-radius: 20%;
+}
+
+.favorite-meals #recipe-btn{
+    margin-right: 15px; 
 }
 
 header{

@@ -2,7 +2,9 @@ const likeBtn = document.getElementById("like-btn");
 const clearFavoriteBtn = document.getElementById("clear-btn");
 const randomMealimgEl = document.getElementById("random_meal_img");
 const randomMealNameEl = document.getElementById("random_meal_name");
+const randomMealRecipeEl = document.getElementById("random-recipe-btn")
 const favoriteContainer = document.getElementById("favorite-meals");
+const refreshButton = document.getElementById("refresh-btn");
 
 
 getRandomMeal();
@@ -15,17 +17,26 @@ likeBtn.addEventListener("click",() => {
     addMealToFavoriteContainer(randomMeal);
     }
     else{
-        likeBtn.className = "fav-btn"
-        removeMealFromLocalStorage(randomMeal);
-        removeMealToFavoriteContainer();
+        likeBtn.className = "fav-btn";
+        removeMealFromLocalStorage(randomMeal.idMeal);
+        removeMealFromFavoriteContainer();
     }
 });
+
 clearFavoriteBtn.addEventListener("click", () => {
+    likeBtn.className = "fav-btn";
     localStorage.clear();
     while (favoriteContainer.hasChildNodes()) {  
         favoriteContainer.removeChild(favoriteContainer.firstChild);
       }
 });
+
+refreshButton.addEventListener("click",() =>{
+    likeBtn.className = "fav-btn";
+    getRandomMeal();
+});
+
+
 
 async function getRandomMeal(){
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
@@ -33,13 +44,11 @@ async function getRandomMeal(){
     randomMeal = randomMeal.meals[0];
     randomMealimgEl.src = randomMeal.strMealThumb;
     randomMealNameEl.innerText = randomMeal.strMeal;
-
-    //console.log(randomMeal);
+    randomMealRecipeEl.setAttribute("href",randomMeal.strSource);
 }
 
 async function getMealsBySearch(mealName){
     const mealsBySearch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s='+mealName);
-
 }
 
 async function getMealById(id){
@@ -66,10 +75,10 @@ function getMealFromLocalStorage(){
     return mealIds == null ? [] : mealIds;  // if empty return empty array and not null.
 }
 
-function removeMealFromLocalStorage(mealId){
+function removeMealFromLocalStorage(i_MealId){
     const mealIds = getMealFromLocalStorage();
     localStorage.setItem('mealIds',JSON.stringify
-    (mealIds.filter(id => id !== mealId)));
+    (mealIds.filter(idMealObj => idMealObj.idMeal !== i_MealId)));
 }
 
 async function fetchFavoriteMeals(){
@@ -85,12 +94,39 @@ async function fetchFavoriteMeals(){
 
 function addMealToFavoriteContainer(i_MealToAdd){
     const mealToWeb = document.createElement("li");
+    
     mealToWeb.innerHTML =
-    `<img src="${i_MealToAdd.strMealThumb}" alt=""><span>${i_MealToAdd.strMeal}</span>`;
+    `<header>
+    <button href=${i_MealToAdd.strSource} title="Recipe" id="recipe-btn" class="recipe-item"><i class="fas fa-book-reader"></i></button>
+    <button title="Delete" id="delete-btn" class="delete-item"><i class="fas fa-times"></i></button>
+    </header>
+    <img src="${i_MealToAdd.strMealThumb}" alt=""><span>${i_MealToAdd.strMeal}</span>`;
     favoriteContainer.prepend(mealToWeb);
+
+    const deleteButton = document.getElementById("delete-btn");
+    deleteButton.addEventListener("click",() =>{
+        removeMealFromLocalStorage(i_MealToAdd.idMeal);
+        favoriteContainer.removeChild(mealToWeb);
+        console.log(i_MealToAdd.strMeal + " - " + randomMealNameEl)
+        if (i_MealToAdd.strMeal == randomMealNameEl.innerText){
+            likeBtn.className = "fav-btn"
+        }
+    });
+
+    const recipeButton = document.getElementById("recipe-btn");
+    recipeButton.addEventListener("click",() =>
+    {
+        window.open(recipeButton.getAttribute("href"));
+    });
 }
 
-function removeMealToFavoriteContainer(){
+function removeMealFromFavoriteContainer(){
 
     favoriteContainer.removeChild(favoriteContainer.firstChild);
 }
+
+
+randomMealRecipeEl.addEventListener("click",() =>
+{
+    window.open(randomMealRecipeEl.getAttribute("href"));
+});
