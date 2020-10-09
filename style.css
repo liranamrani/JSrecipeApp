@@ -30,36 +30,99 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, F
     text-align: center;
     background-color:beige;
     border-radius: 2%;
-}
-
-.favorite-meals{
-    display: flex;
-    list-style-type: none;
-    padding: 0;
     
 }
+.favorite-container button{
+    padding:0rem;
+    font-size: 1rem;
+    text-align: center;
+    background: none;
+    border-radius: 2%;
+    outline: none;
+    border:none;
+    cursor: pointer;
+}
+
 
 .meal{
-    
+    margin: 1.5rem;
+    border-radius: 3px;
+    box-shadow: 0 0 10px 2px #3333331a;
 }
 .meal-header {
     position: relative;
 }
+.meal-header .random{
+    position: absolute;
+    top: 10px;
+    background-color: white;
+    padding: 0.25rem 0.5rem;
+    
+}
+.meal-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.meal-body button{
+    margin-left: auto;
+    border: none;
+    background: transparent;
+    color: gray;
+    cursor: pointer;
+    outline: none;
+}
+.meal-body .fav-btn.active{
+    color: red;
+}
+.meal-body .fav-btn.fav-btn.active{
+    color: red;
+}
+
+.meal-body h4{
+    margin: 0;
+}
+
 .meal-header img {
     object-fit: cover;
     height: 200px;
     width: 100%;
 }
+.favorite-meals{
+    justify-content: center;
+    display: flex;
+    overflow: auto;
+    list-style-type: none;
+    padding: 0;
+}
+
+.favorite-meals.long{
+    justify-content: unset;
+}
+
+.favorite-meals::-webkit-scrollbar {
+    display: none;
+}
 
 .favorite-meals li{
+    max-width: 100px;
+    max-height: 120px;
+    margin: 3px;
 
+}
+.favorite-meals li span{
+    display: block;
+    font-size: 0.8rem;
 }
 
 .favorite-meals img{
-width: 100px;
-height: 100px;
+max-width: 100px;
+height: 75px;
 object-fit: cover;
-border: 3px;
+border: 2px solid rgb(196, 184, 162);
+box-shadow: 0 0 10px 2px #3333331a;
 border-radius: 20%;
 }
 
@@ -74,13 +137,16 @@ header button{
     color: #aaaa;
     border: none;
     background-color: transparent;
+    cursor: pointer;
 }
 
 header input{
     background-color: #eee;
     border:none;
     border-radius: 3px;
-    padding: 0.5rem 1rem
+    padding: 0.5rem 1rem;
+    outline: none;
+    
 }
 
 img{
