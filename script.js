@@ -62,7 +62,6 @@ async function getRandomMeal(){
     randomMealimgEl.src = randomMeal.strMealThumb;
     randomMealNameEl.innerText = randomMeal.strMeal;
     randomMealRecipeEl.setAttribute("href",randomMeal.strSource);
-    console.log(randomMeal);
 }
 
 async function getMealsBySearch(mealName){
@@ -85,7 +84,6 @@ function addMealToLocalStorage(mealId){
     localStorage.setItem('mealIds',JSON.stringify([...mealIds,mealId]));
     let numberOfFavoriteMeals = JSON.parse(localStorage.getItem("mealIds"));
     numberOfFavoriteMeals = numberOfFavoriteMeals.length;
-    //console.log(numberOfFavoriteMeals);
     if (numberOfFavoriteMeals > 4){
         favoriteContainer.classList.add("long");
     }
@@ -107,10 +105,11 @@ async function fetchFavoriteMeals(){
     const mealsToShowOnScreen = [];
 
     mealIds.forEach(meal => {
-        //console.log(meal);
         addMealToFavoriteContainer(meal);
     });
-    
+    if (mealIds.length > 4){
+        favoriteContainer.classList.add("long");
+    }
 }
 
 function showPopupMeal(mealData){
@@ -125,11 +124,9 @@ function showPopupMeal(mealData){
         if (mealData[`strIngredient${i}`]){
             //mealIngredient.push((mealData[`strIngredient${i}`]+` | `+mealData[`strMeasure${i}`]))
             IngredienLi.innerText = (mealData[`strIngredient${i}`] +((mealData[`strMeasure${i}`]) ?  ` | `+mealData[`strMeasure${i}`]:""));
-            //console.log(IngredienLi);
             IngredienUl.appendChild(IngredienLi);
         }
     }
-    console.log(IngredienUl);
     popUpData.innerHTML =
     `<button id="close-popup" class="close-popup"><i class="fas fa-times"></i></button>
     <h1>${mealData.strMeal}</h1>
@@ -227,10 +224,10 @@ function addMeal(mealData) {
                     </div>
                     
                 <div class="meal-body-buttons">
-                    <button title="Recipe" id="random-recipe-btn" class="recipe-item"><i class="fas fa-book-reader"></i></button>
+                    <button href="${mealData.strSource}" title="Recipe" id="recipe-btn" class="recipe-item"><i class="fas fa-book-reader"></i></button>
                     <button title="Add To Favorite" id="like-btn" class="fav-btn"><i class="fas fa-heart"></i></button>
                 </div>`;
-                const btn = mealToWeb.querySelector(".fav-btn");
+                let btn = mealToWeb.querySelector(".fav-btn");
 
                 btn.addEventListener("click", () => {
                     if (btn.classList.contains("active")) {
@@ -243,6 +240,11 @@ function addMeal(mealData) {
                         btn.classList.add("active");
                     }
 
+                });
+                btn = mealToWeb.querySelector(".recipe-item");
+                btn.addEventListener("click",() =>
+                {
+                    window.open(btn.getAttribute("href"));
                 });
                 
     mealsEl.appendChild(mealToWeb);
