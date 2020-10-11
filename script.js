@@ -242,10 +242,10 @@ function addMeal(mealData) {
                     }
 
                 });
-                btn = mealToWeb.querySelector(".recipe-item");
-                btn.addEventListener("click",() =>
+                let recipebtn = mealToWeb.querySelector(".recipe-item");
+                recipebtn.addEventListener("click",() =>
                 {
-                    window.open(btn.getAttribute("href"));
+                    window.open(recipebtn.getAttribute("href"));
                 });
                 
     mealsEl.appendChild(mealToWeb);
