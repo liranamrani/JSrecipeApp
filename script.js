@@ -152,6 +152,9 @@ popupCloseButten.addEventListener("click", ()=> {
 randomMealimgEl.addEventListener("click",() =>{
     showPopupMeal(randomMeal);
 });
+randomMealimgEl.addEventListener("touchstart",() =>{
+    showPopupMeal(randomMeal);
+});
 
 function addMealToFavoriteContainer(i_MealToAdd){
     const mealToWeb = document.createElement("li");
