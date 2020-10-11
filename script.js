@@ -9,8 +9,9 @@ const searchText = document.getElementById("search-text");
 const searchButton = document.getElementById("search");
 const mealsEl = document.getElementById("meals");
 const popupMealEl = document.getElementById("popup-meal");
-const popupCloseButten = document.getElementById("close-popup");
+
 const popupDataEl = document.getElementById("popup-data");
+let randomMeal;
 
 
 getRandomMeal();
@@ -29,9 +30,15 @@ likeBtn.addEventListener("click",() => {
     }
 });
 
-popupCloseButten.addEventListener("click", ()=> {
+popupMealEl.addEventListener("click",function(e){
+    var el = e.target.closest('#meal-info');
+    if (el==null)
+    {
     popupMealEl.classList.add("hide");
+    }
 });
+
+
 
 clearFavoriteBtn.addEventListener("click", () => {
     likeBtn.className = "fav-btn";
@@ -107,7 +114,22 @@ async function fetchFavoriteMeals(){
 }
 
 function showPopupMeal(mealData){
+    popupMealEl.scrollTo(0,0);
     const popUpData = document.createElement("div");
+    popupDataEl.innerHTML = "";
+    //mealIngredient = [];
+    const IngredienUl = document.createElement("ul");
+    for (let i = 0;i<=20;i++){
+        
+        let IngredienLi =document.createElement("ol");
+        if (mealData[`strIngredient${i}`]){
+            //mealIngredient.push((mealData[`strIngredient${i}`]+` | `+mealData[`strMeasure${i}`]))
+            IngredienLi.innerText = (mealData[`strIngredient${i}`] +((mealData[`strMeasure${i}`]) ?  ` | `+mealData[`strMeasure${i}`]:""));
+            //console.log(IngredienLi);
+            IngredienUl.appendChild(IngredienLi);
+        }
+    }
+    console.log(IngredienUl);
     popUpData.innerHTML =
     `<button id="close-popup" class="close-popup"><i class="fas fa-times"></i></button>
     <h1>${mealData.strMeal}</h1>
@@ -115,14 +137,24 @@ function showPopupMeal(mealData){
 </div>
 <div>
     <p>${mealData.strInstructions}</p>
-    <ul>
-        <li>ing 1 / measure</li>
-        <li>ing 2 / measure</li>
-        <li>ing 3 / measure</li>
+    <h3>Ingredient</h3>
+    <ul class="ingredient">
+    ${IngredienUl.innerHTML}
     </ul>
 </div>`
 popupDataEl.appendChild(popUpData);
+popupMealEl.classList.remove("hide");
+
+const popupCloseButten = document.getElementById("close-popup");
+popupCloseButten.addEventListener("click", ()=> {
+    popupMealEl.classList.add("hide");
+});
+
 }
+
+randomMealimgEl.addEventListener("click",() =>{
+    showPopupMeal(randomMeal);
+});
 
 function addMealToFavoriteContainer(i_MealToAdd){
     const mealToWeb = document.createElement("li");
@@ -132,7 +164,7 @@ function addMealToFavoriteContainer(i_MealToAdd){
     <button href=${i_MealToAdd.strSource} title="Recipe" id="recipe-btn" class="fav-btn-item"><i class="fas fa-book-reader"></i></button>
     <button title="Delete" id="delete-btn" class="fav-btn-item""><i class="fas fa-times"></i></button>
     </header>
-    <img src="${i_MealToAdd.strMealThumb}" alt=""><span>${i_MealToAdd.strMeal}</span>`;
+    <img id="fav-img" src="${i_MealToAdd.strMealThumb}" alt=""><span>${i_MealToAdd.strMeal}</span>`;
     favoriteContainer.prepend(mealToWeb);
 
     const deleteButton = document.getElementById("delete-btn");
@@ -150,6 +182,10 @@ function addMealToFavoriteContainer(i_MealToAdd){
     {
         window.open(recipeButton.getAttribute("href"));
     });
+    const favoriteImg = document.getElementById("fav-img");
+    favoriteImg.addEventListener("click",() =>{
+        showPopupMeal(i_MealToAdd);
+    });
 }
 
 function removeMealFromFavoriteContainer(){
@@ -165,11 +201,6 @@ randomMealRecipeEl.addEventListener("click",() =>
 
 searchButton.addEventListener("click",async ()=> {
     const searchMeal = await getMealsBySearch(searchText.value);
-    //const mealToWeb = document.createElement("div");
-    //mealToWeb.classList.add("meal");
-    //randMeal = mealsEl.firstElementChild;
-    //mealToWeb.appendChild(randMeal);
-    //console.log(mealToWeb);
     while (mealsEl.hasChildNodes()) {  
         mealsEl.removeChild(mealsEl.firstChild);
       }
@@ -213,5 +244,6 @@ function addMeal(mealData) {
                     }
 
                 });
+                
     mealsEl.appendChild(mealToWeb);
         }
